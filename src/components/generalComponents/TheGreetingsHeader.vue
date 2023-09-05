@@ -41,8 +41,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 24px;
-  margin: 0 auto 0 auto;
+  margin: -24px auto 0 auto;
   width: 900px;
   height: 129px;
   box-sizing: border-box;
@@ -100,7 +99,7 @@ export default {
 .greetingsBottomLine{
   display: flex;
   align-self: flex-end;
-  margin: 0 auto 0 auto;
+  margin: 0 auto 24px auto;
   border: 1px solid #00000014;
   width: 852px;
 }

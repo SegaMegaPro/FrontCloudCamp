@@ -1,15 +1,26 @@
 <template>
   <div>
     <p><slot name="title">Title</slot></p>
-    <input :placeholder="placeholder">
+    <input :placeholder="placeholder" v-model="inputValue" @input="emitValue">
   </div>
 </template>
 
 <script>
 export default {
   name: 'TheInputField',
+  data () {
+    return {
+      inputValue: this.value
+    }
+  },
   props: {
-    placeholder: String
+    placeholder: String,
+    value: String
+  },
+  methods: {
+    emitValue () {
+      this.$emit('input', this.inputValue)
+    }
   }
 }
 </script>

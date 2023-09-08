@@ -1,28 +1,23 @@
 <template>
-  <div>TEST</div>
-  <div>
-    {{ phone }}
-    {{ email }}
-  </div>
+  <the-content-wrapper class="stepOneWrapper">
+    <the-progress-bar :point-one="true"></the-progress-bar>
+  </the-content-wrapper>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
+import TheProgressBar from '@/components/generalComponents/TheProgressBar'
+import TheContentWrapper from '@/components/generalComponents/TheContentWrapper'
 export default {
   name: 'TheStepOnePage',
-  data () {
-    return {
-      phone: this.$store.getters.PHONE,
-      email: this.$store.getters.EMAIL
-    }
-  },
-  computed: {
-    ...mapGetters(['PHONE', 'EMAIL'])
+  components: {
+    'the-content-wrapper': TheContentWrapper,
+    'the-progress-bar': TheProgressBar
   }
 }
 </script>
 
 <style scoped>
-
+.stepOneWrapper{
+  height: 821px;
+}
 </style>

@@ -29,7 +29,12 @@ export default {
   margin: 60px auto 50px 900px;
   text-align: center;
   font-size: 15px;
-  width: 250px;
+  width: 270px;
   height: 500px;
+}
+li{
+  margin-left: -10px;
+  margin-bottom: 10px;
+  width: 100%;
 }
 </style>

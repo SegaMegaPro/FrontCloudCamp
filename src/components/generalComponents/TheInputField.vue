@@ -1,25 +1,44 @@
 <template>
   <div>
     <p><slot name="title">Title</slot></p>
-    <input :placeholder="placeholder" v-model="inputValue" @input="emitValue">
+    <input :placeholder="placeholder" v-model="inputValue" @input="emitValue" ref="maskedInput">
   </div>
 </template>
 
 <script>
+import Cleave from 'cleave.js'
+import 'cleave.js/dist/addons/cleave-phone.ru'
 export default {
   name: 'TheInputField',
   data () {
     return {
-      inputValue: this.value
+      inputValue: ''
     }
   },
   props: {
     placeholder: String,
-    value: String
+    applyPhoneMask: Boolean
   },
   methods: {
     emitValue () {
       this.$emit('input', this.inputValue)
+    }
+  },
+  mounted () {
+    if (this.applyPhoneMask) {
+      const cleave = new Cleave(this.$refs.maskedInput, {
+        delimiters: [' ', ' ', '-', '-', '-'],
+        prefix: '+7',
+        noImmediatePrefix: true,
+        blocks: [2, 3, 3, 2, 2],
+        uppercase: true,
+        numericOnly: true
+      })
+    }
+  },
+  watch: {
+    value (newValue) {
+      this.inputValue = newValue
     }
   }
 }

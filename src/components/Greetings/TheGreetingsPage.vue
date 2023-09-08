@@ -3,10 +3,10 @@
       <the-validation-errors ref="validationErrors"></the-validation-errors>
       <the-greetings-header></the-greetings-header>
       <form @submit.prevent="goToStepOne">
-        <the-input-field class="greetingsInput" id="field-phone" :placeholder="phonePlaceholder" v-model="phone" @input="updatePhone" :value="phone">
+        <the-input-field class="greetingsInput" id="field-phone" :placeholder="phonePlaceholder" @input="updatePhone" :apply-phone-mask="true">
           <template v-slot:title>Номер телефона</template>
         </the-input-field>
-        <the-input-field class="greetingsInput" id="field-email" :placeholder="emailPlaceholder" v-model="email" @input="updateEmail" :value="email">
+        <the-input-field class="greetingsInput" id="field-email" :placeholder="emailPlaceholder" @input="updateEmail">
           <template v-slot:title>Email</template>
         </the-input-field>
         <the-next-button id="button-start" @click="goToStepOne" type="submit">
@@ -24,6 +24,7 @@ import TheNextButton from '@/components/generalComponents/TheNextButton'
 import TheValidationErrors from '@/components/generalComponents/TheValidationErrors'
 import router from '@/main'
 import { mapMutations, mapState } from 'vuex'
+
 export default {
   name: 'TheGreetingsPage',
   data () {
@@ -42,28 +43,34 @@ export default {
     'the-validation-errors': TheValidationErrors
   },
   methods: {
-    ...mapMutations(['setPhoneData', 'setEmailData']),
-    goToStepOne () {
+    ...mapMutations(['SET_PHONE', 'SET_EMAIL']),
+    goToStepOne (event) {
       const greetingsErrors = this.$refs.validationErrors
+      greetingsErrors.errors = []
+      let errorFlag = false
       if (this.phone.length < 16) {
         greetingsErrors.errors.push('Некорректный номер телефона')
-      } else if (this.validateEmail()) {
+        errorFlag = true
+      }
+      if (this.validateEmail()) {
         greetingsErrors.errors.push('Некорректный адрес почты')
-      } else {
+        errorFlag = true
+      }
+      if (greetingsErrors.errors.length === 0 && !errorFlag) {
         event.preventDefault()
+        this.$store.commit('setPhoneData', this.phone)
+        this.$store.commit('setEmailData', this.email)
         router.push('/greetings/step1')
       }
     },
     validateEmail () {
       const emailRegEXP = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-      if (emailRegEXP.test(this.email) && this.email.length !== 0) {
-        return false
-      }
+      return !emailRegEXP.test(this.email)
     },
-    updatePhone (value) {
+    updatePhone () {
       this.phone = event.target.value
     },
-    updateEmail (value) {
+    updateEmail () {
       this.email = event.target.value
     }
   },

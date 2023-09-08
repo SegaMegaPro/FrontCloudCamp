@@ -58,8 +58,8 @@ export default {
       }
       if (greetingsErrors.errors.length === 0 && !errorFlag) {
         event.preventDefault()
-        this.$store.commit('setPhoneData', this.phone)
-        this.$store.commit('setEmailData', this.email)
+        this.$store.dispatch('SET_PHONE', this.phone)
+        this.$store.dispatch('SET_EMAIL', this.email)
         router.push('/greetings/step1')
       }
     },

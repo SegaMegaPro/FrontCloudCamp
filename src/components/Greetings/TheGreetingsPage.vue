@@ -2,7 +2,6 @@
     <the-content-wrapper>
       <the-validation-errors ref="validationErrors"></the-validation-errors>
       <the-greetings-header></the-greetings-header>
-      <form @submit.prevent="goToStepOne">
         <the-input-field class="greetingsInput" id="field-phone" :placeholder="phonePlaceholder" @input="updatePhone" :apply-phone-mask="true">
           <template v-slot:title>Номер телефона</template>
         </the-input-field>
@@ -12,7 +11,6 @@
         <the-next-button id="button-start" @click="goToStepOne" type="submit">
           <template v-slot:text>Начать</template>
         </the-next-button>
-      </form>
     </the-content-wrapper>
 </template>
 

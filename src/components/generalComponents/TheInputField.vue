@@ -1,7 +1,11 @@
 <template>
   <div>
     <p><slot name="title">Title</slot></p>
-    <input :placeholder="placeholder" v-model="inputValue" @input="emitValue" ref="maskedInput">
+    <input :placeholder="placeholder" v-model="inputValue" @input="emitValue" ref="maskedInput" :style="{backgroundColor: bgColor}">
+    <a href="#" v-if="applyTip" @mouseover="showTipContent = true" @mouseleave="showTipContent = false" @click="preventDefault">
+      Tip
+      <div v-if="showTipContent" class="tooltip">{{tipContent}}</div>
+    </a>
   </div>
 </template>
 
@@ -12,16 +16,23 @@ export default {
   name: 'TheInputField',
   data () {
     return {
-      inputValue: ''
+      inputValue: '',
+      showTipContent: false
     }
   },
   props: {
-    placeholder: String,
-    applyPhoneMask: Boolean
+    placeholder: String(),
+    applyPhoneMask: Boolean(),
+    bgColor: String,
+    applyTip: Boolean(),
+    tipContent: String()
   },
   methods: {
     emitValue () {
       this.$emit('input', this.inputValue)
+    },
+    preventDefault () {
+      event.preventDefault()
     }
   },
   mounted () {
@@ -65,5 +76,26 @@ input{
   box-sizing: border-box;
   background-color: #0000000A;
   border: 1px solid rgba(0, 0, 0, 0.16);
+}
+a{
+  width: 300px;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  color: rgba(0, 0, 0, 0.48);
+  font-size: 12px;
+  font-weight: 400;
+}
+a:link, a:visited, a:active{
+  text-decoration: none;
+}
+.tooltip {
+  position: absolute;
+  margin-top: -60px;
+  margin-left: 420px;
+  border: 1px solid #5558FA;
+  background-color: #ffffff;
+  color: #333333;
+  padding: 5px;
+  border-radius: 5px;
 }
 </style>

@@ -4,6 +4,7 @@ import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import TheGreetingsPage from '@/components/Greetings/TheGreetingsPage.vue'
 import TheStepOnePage from '@/components/StepOne/TheStepOnePage.vue'
+import VueSelect from 'vue-select'
 import { createStore } from 'vuex'
 // Импорты
 // Роутер

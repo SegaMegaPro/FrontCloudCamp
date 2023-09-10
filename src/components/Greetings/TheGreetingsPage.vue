@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
     <the-content-wrapper>
       <the-validation-errors ref="validationErrors"></the-validation-errors>
@@ -8,7 +9,7 @@
         <the-input-field class="greetingsInput" id="field-email" :placeholder="emailPlaceholder" @input="updateEmail">
           <template v-slot:title>Email</template>
         </the-input-field>
-        <the-next-button id="button-start" @click="goToStepOne" type="submit">
+        <the-next-button id="button-start" @click="goToStepOne">
           <template v-slot:text>Начать</template>
         </the-next-button>
     </the-content-wrapper>
@@ -46,7 +47,7 @@ export default {
       const greetingsErrors = this.$refs.validationErrors
       greetingsErrors.errors = []
       let errorFlag = false
-      if (this.phone.length < 16) {
+      if (this.validatePhone()) {
         greetingsErrors.errors.push('Некорректный номер телефона')
         errorFlag = true
       }
@@ -60,6 +61,9 @@ export default {
         this.$store.dispatch('SET_EMAIL', this.email)
         router.push('/greetings/step1')
       }
+    },
+    validatePhone () {
+      return (this.phone.length < 16)
     },
     validateEmail () {
       const emailRegEXP = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/

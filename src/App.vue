@@ -1,6 +1,7 @@
 <template>
   <router-view name="theGreetingsPage"></router-view>
   <router-view name="theStepOnePage"></router-view>
+  <router-view name="theStepTwoPage"></router-view>
 </template>
 
 <script lang="ts">

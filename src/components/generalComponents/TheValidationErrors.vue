@@ -26,7 +26,7 @@ export default {
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin: 60px auto 50px 900px;
+  margin: 60px 30px 10px 900px;
   text-align: center;
   font-size: 15px;
   width: 270px;

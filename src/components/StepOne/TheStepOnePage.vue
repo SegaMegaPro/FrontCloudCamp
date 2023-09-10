@@ -1,21 +1,23 @@
+<!--suppress ALL -->
 <template>
   <the-content-wrapper class="stepOneWrapper">
-    <the-progress-bar :point-one="true"></the-progress-bar>
-    <the-input-field id="field-nickname" class="stepOneInputs" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="nicknameTip">
+    <the-validation-errors ref="validationErrors" class="stepOneValidationErrors"></the-validation-errors>
+    <the-progress-bar :point-one="true" ref="stepOneProgressBar"></the-progress-bar>
+    <the-input-field id="field-nickname" class="stepOneInputs" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="nicknameTip" @input="updateNickname">
       <template v-slot:title>Nickname</template>
     </the-input-field>
-    <the-input-field id="field-name" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="nameTip">
+    <the-input-field id="field-name" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="nameTip" @input="updateName">
       <template v-slot:title>Name</template>
     </the-input-field>
-    <the-input-field id="field-surname" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="surnameTip">
+    <the-input-field id="field-surname" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="surnameTip" @input="updateSurname">
       <template v-slot:title>Surname</template>
     </the-input-field>
-    <the-select-field :searchable="applySearchable" id="field-sex">
+    <the-select-field :searchable="applySearchable" id="field-sex" @select="updateSex">
       <template v-slot:title>Sex</template>
     </the-select-field>
     <div class="stepOneButtonsWrapper">
       <the-back-button id="button-back"><template v-slot:text>Назад</template></the-back-button>
-      <the-next-button id="button-next"><template v-slot:text>Далее</template></the-next-button>
+      <the-next-button id="button-next" @click="goToStepTwo"><template v-slot:text>Далее</template></the-next-button>
     </div>
   </the-content-wrapper>
 </template>
@@ -27,10 +29,13 @@ import TheInputField from '@/components/generalComponents/TheInputField'
 import TheSelectField from '@/components/generalComponents/TheSelectField'
 import TheNextButton from '@/components/generalComponents/TheNextButton'
 import TheBackButton from '@/components/generalComponents/TheBackButton'
+import TheValidationErrors from '@/components/generalComponents/TheValidationErrors'
+import router from '@/main'
+import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'TheStepOnePage',
   components: {
-    TheNextButton,
+    'the-validation-errors': TheValidationErrors,
     'the-content-wrapper': TheContentWrapper,
     'the-progress-bar': TheProgressBar,
     'the-input-field': TheInputField,
@@ -45,8 +50,74 @@ export default {
       nicknameTip: 'Не больше 30 символов, можно использовать буквы и цифры (спец. символы запрещены)',
       nameTip: 'Не больше 50 символов, только буквы',
       surnameTip: 'Не больше 50 символов, только буквы',
-      applySearchable: false
+      applySearchable: false,
+      nickname: '',
+      name: '',
+      surname: '',
+      sex: ''
     }
+  },
+  methods: {
+    ...mapMutations(['SET_NICKNAME', 'SET_NAME', 'SET_SURNAME', 'SET_SEX']),
+    goToStepTwo () {
+      const greetingsErrors = this.$refs.validationErrors
+      greetingsErrors.errors = []
+      let errorFlag = false
+      if (this.validateNickName()) {
+        greetingsErrors.errors.push('Некорректный никнейм')
+        errorFlag = true
+      }
+      if (this.validateName()) {
+        greetingsErrors.errors.push('Некорректное имя')
+        errorFlag = true
+      }
+      if (this.validateSurname()) {
+        greetingsErrors.errors.push('Некорректная фамилия')
+        errorFlag = true
+      }
+      if (this.validateSex()) {
+        greetingsErrors.errors.push('Некорректный пол')
+        errorFlag = true
+      }
+      if (greetingsErrors.errors.length === 0 && !errorFlag) {
+        event.preventDefault()
+        this.$store.dispatch('SET_NICKNAME', this.nickname)
+        this.$store.dispatch('SET_NAME', this.name)
+        this.$store.dispatch('SET_SURNAME', this.surname)
+        this.$store.dispatch('SET_SEX', this.sex)
+        router.push('/greetings/step1/step2')
+      }
+    },
+    updateNickname () {
+      this.nickname = event.target.value
+    },
+    updateName () {
+      this.name = event.target.value
+    },
+    updateSurname () {
+      this.surname = event.target.value
+    },
+    updateSex () {
+      this.sex = event.target.value
+    },
+    validateNickName () {
+      const nickNameREGEXP = /^[a-zA-Zа-яА-ЯёЁ0-9]{1,30}$/
+      return !nickNameREGEXP.test(this.nickname)
+    },
+    validateName () {
+      const nameREGEXP = /^[a-zA-Zа-яА-ЯёЁ]{1,50}$/
+      return !nameREGEXP.test(this.name)
+    },
+    validateSurname () {
+      const surnameREGEXP = /^[a-zA-Zа-яА-ЯёЁ]{1,50}$/
+      return !surnameREGEXP.test(this.surname)
+    },
+    validateSex () {
+      return (this.sex === '' || this.sex.length === 0 || this.sex === null)
+    }
+  },
+  computed: {
+    ...mapState(['nicknameData', 'nameData', 'surnameData', 'sexData'])
   }
 }
 </script>
@@ -54,11 +125,14 @@ export default {
 <style scoped>
 .stepOneWrapper{
   height: 821px;
-  padding: 62px 110px ;
+  padding: 62px 110px;
 }
 .stepOneButtonsWrapper{
   display: flex;
   width: 692px;
   justify-content: space-between;
+}
+.stepOneValidationErrors{
+  margin-left: 820px;
 }
 </style>

@@ -12,11 +12,11 @@
     <the-input-field id="field-surname" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="surnameTip" @input="updateSurname">
       <template v-slot:title>Surname</template>
     </the-input-field>
-    <the-select-field :searchable="applySearchable" id="field-sex" @select="updateSex">
+    <the-select-field :searchable="applySearchable" id="field-sex" v-model="sex" @input="updateSex" ref="select">
       <template v-slot:title>Sex</template>
     </the-select-field>
     <div class="stepOneButtonsWrapper">
-      <the-back-button id="button-back"><template v-slot:text>Назад</template></the-back-button>
+      <the-back-button id="button-back" @click="goBack"><template v-slot:text>Назад</template></the-back-button>
       <the-next-button id="button-next" @click="goToStepTwo"><template v-slot:text>Далее</template></the-next-button>
     </div>
   </the-content-wrapper>
@@ -51,10 +51,10 @@ export default {
       nameTip: 'Не больше 50 символов, только буквы',
       surnameTip: 'Не больше 50 символов, только буквы',
       applySearchable: false,
-      nickname: '',
-      name: '',
-      surname: '',
-      sex: ''
+      nickname: this.$store.NICKNAME,
+      name: this.$store.NAME,
+      surname: this.$store.SURNAME,
+      sex: this.$store.SEX
     }
   },
   methods: {
@@ -114,6 +114,9 @@ export default {
     },
     validateSex () {
       return (this.sex === '' || this.sex.length === 0 || this.sex === null)
+    },
+    goBack () {
+      router.push('/greetings')
     }
   },
   computed: {

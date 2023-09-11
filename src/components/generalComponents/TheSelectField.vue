@@ -1,7 +1,7 @@
 <template>
   <p><slot name="title">Title</slot></p>
   <div class="selectWrapper">
-    <vue-select class="selectField" :options="options" style="font-family: 'SB Sans Interface',sans-serif" :searchable="false" :placeholder="placeholder" v-model="selectedValue"></vue-select>
+    <vue-select class="selectField" :options="options" style="font-family: 'SB Sans Interface',sans-serif" :searchable="false" :placeholder="placeholder" @input="emitValue" v-model="selectedValue"></vue-select>
   </div>
 </template>
 
@@ -12,16 +12,23 @@ export default {
   name: 'TheSelectField',
   data () {
     return {
-      options: [
-        'man',
-        'woman'
-      ],
+      options: ['man', 'woman'],
       placeholder: 'Placeholder',
-      selectedValue: String()
+      selectedValue: ''
     }
   },
   components: {
     'vue-select': VueSelect
+  },
+  methods: {
+    emitValue () {
+      this.$emit('input', this.selectedValue)
+    }
+  },
+  watch: {
+    value (newValue) {
+      this.selectedValue = newValue
+    }
   }
 }
 </script>

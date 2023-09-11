@@ -27,10 +27,17 @@
 <script>
 export default {
   name: 'TheProgressBar',
+  data () {
+    return {
+      pointOneD: true,
+      pointTwoD: false,
+      pointThreeD: false
+    }
+  },
   props: {
-    pointOne: Boolean,
-    pointTwo: Boolean,
-    pointThree: Boolean
+    pointOne: Boolean(false),
+    pointTwo: Boolean(false),
+    pointThree: Boolean(false)
   },
   methods: {
 

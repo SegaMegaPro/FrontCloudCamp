@@ -30,8 +30,8 @@ export default {
     return {
       phonePlaceholder: '+7 999 999-99-99',
       emailPlaceholder: 'tim.jennings@example.com',
-      phone: '',
-      email: ''
+      phone: this.$store.getters.PHONE,
+      email: this.$store.getters.EMAIL
     }
   },
   components: {

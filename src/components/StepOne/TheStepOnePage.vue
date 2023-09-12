@@ -3,16 +3,16 @@
   <the-content-wrapper class="stepOneWrapper">
     <the-validation-errors ref="validationErrors" class="stepOneValidationErrors"></the-validation-errors>
     <the-progress-bar :point-one="true" ref="stepOneProgressBar"></the-progress-bar>
-    <the-input-field id="field-nickname" class="stepOneInputs" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="nicknameTip" @input="updateNickname">
+    <the-input-field id="field-nickname" class="stepOneInputs" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :tip-content="nicknameTip" @input="updateNickname" >
       <template v-slot:title>Nickname</template>
     </the-input-field>
-    <the-input-field id="field-name" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="nameTip" @input="updateName">
+    <the-input-field id="field-name" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :tip-content="nameTip" @input="updateName">
       <template v-slot:title>Name</template>
     </the-input-field>
-    <the-input-field id="field-surname" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :apply-tip="true" :tip-content="surnameTip" @input="updateSurname">
+    <the-input-field id="field-surname" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :tip-content="surnameTip" @input="updateSurname">
       <template v-slot:title>Surname</template>
     </the-input-field>
-    <the-select-field :searchable="applySearchable" id="field-sex" v-model="sex" @input="updateSex" ref="select">
+    <the-select-field id="field-sex" class="stepOneInputs" :bg-color = "bgColor" :placeholder="placeholder" @input="updateSex">
       <template v-slot:title>Sex</template>
     </the-select-field>
     <div class="stepOneButtonsWrapper">
@@ -47,6 +47,7 @@ export default {
     return {
       placeholder: 'Placeholder',
       bgColor: '#FFFFFF',
+      inputWidth: '300px',
       nicknameTip: 'Не больше 30 символов, можно использовать буквы и цифры (спец. символы запрещены)',
       nameTip: 'Не больше 50 символов, только буквы',
       surnameTip: 'Не больше 50 символов, только буквы',
@@ -63,19 +64,19 @@ export default {
       const greetingsErrors = this.$refs.validationErrors
       greetingsErrors.errors = []
       let errorFlag = false
-      if (this.validateNickName()) {
+      if (this.validateNickName() || this.nickname === undefined) {
         greetingsErrors.errors.push('Некорректный никнейм')
         errorFlag = true
       }
-      if (this.validateName()) {
+      if (this.validateName() || this.name === undefined) {
         greetingsErrors.errors.push('Некорректное имя')
         errorFlag = true
       }
-      if (this.validateSurname()) {
+      if (this.validateSurname() || this.surname === undefined) {
         greetingsErrors.errors.push('Некорректная фамилия')
         errorFlag = true
       }
-      if (this.validateSex()) {
+      if (this.validateSex() || this.sex === undefined) {
         greetingsErrors.errors.push('Некорректный пол')
         errorFlag = true
       }
@@ -97,8 +98,8 @@ export default {
     updateSurname () {
       this.surname = event.target.value
     },
-    updateSex () {
-      this.sex = event.target.value
+    updateSex (value) {
+      this.sex = value
     },
     validateNickName () {
       const nickNameREGEXP = /^[a-zA-Zа-яА-ЯёЁ0-9]{1,30}$/
@@ -113,7 +114,9 @@ export default {
       return !surnameREGEXP.test(this.surname)
     },
     validateSex () {
-      return (this.sex === '' || this.sex.length === 0 || this.sex === null)
+      if (this.sex) {
+        return (this.sex === '' || this.sex.length === 0 || this.sex === null)
+      }
     },
     goBack () {
       router.push('/greetings')
@@ -137,5 +140,8 @@ export default {
 }
 .stepOneValidationErrors{
   margin-left: 820px;
+}
+.stepOneInputs{
+  width: 300px;
 }
 </style>

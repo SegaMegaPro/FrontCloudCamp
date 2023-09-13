@@ -3,16 +3,16 @@
   <the-content-wrapper class="stepOneWrapper">
     <the-validation-errors ref="validationErrors" class="stepOneValidationErrors"></the-validation-errors>
     <the-progress-bar :point-one="true" ref="stepOneProgressBar"></the-progress-bar>
-    <the-input-field id="field-nickname" class="stepOneInputs" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :tip-content="nicknameTip" @input="updateNickname" >
+    <the-input-field id="field-nickname" class="stepOneInputs" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :apply-title="true" :tip-content="nicknameTip" @input="updateNickname" >
       <template v-slot:title>Nickname</template>
     </the-input-field>
-    <the-input-field id="field-name" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :tip-content="nameTip" @input="updateName">
+    <the-input-field id="field-name" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :apply-title="true" :tip-content="nameTip" @input="updateName">
       <template v-slot:title>Name</template>
     </the-input-field>
-    <the-input-field id="field-surname" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :tip-content="surnameTip" @input="updateSurname">
+    <the-input-field id="field-surname" class="stepOneInputs" :type="'input'" :placeholder="placeholder" :bg-color="bgColor" :input-width="inputWidth" :apply-tip="true" :apply-title="true" :tip-content="surnameTip" @input="updateSurname">
       <template v-slot:title>Surname</template>
     </the-input-field>
-    <the-select-field id="field-sex" class="stepOneInputs" :bg-color = "bgColor" :placeholder="placeholder" @input="updateSex">
+    <the-select-field id="field-sex" class="stepOneInputs" :bg-color = "bgColor" :apply-title="true" :placeholder="placeholder" @input="updateSex">
       <template v-slot:title>Sex</template>
     </the-select-field>
     <div class="stepOneButtonsWrapper">
@@ -143,5 +143,6 @@ export default {
 }
 .stepOneInputs{
   width: 300px;
+  margin-bottom: -8px;
 }
 </style>

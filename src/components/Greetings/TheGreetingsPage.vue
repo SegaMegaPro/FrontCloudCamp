@@ -3,10 +3,10 @@
     <the-content-wrapper>
       <the-validation-errors ref="validationErrors"></the-validation-errors>
       <the-greetings-header></the-greetings-header>
-        <the-input-field class="greetingsInput" id="field-phone" :placeholder="phonePlaceholder" @input="updatePhone" :apply-phone-mask="true">
+        <the-input-field class="greetingsInput" id="field-phone" :placeholder="phonePlaceholder" @input="updatePhone" :apply-phone-mask="true" :apply-title="true">
           <template v-slot:title>Номер телефона</template>
         </the-input-field>
-        <the-input-field class="greetingsInput" id="field-email" :placeholder="emailPlaceholder" @input="updateEmail">
+        <the-input-field class="greetingsInput" id="field-email" :placeholder="emailPlaceholder" @input="updateEmail" apply-title="true">
           <template v-slot:title>Email</template>
         </the-input-field>
         <the-next-button id="button-start" @click="goToStepOne">
@@ -84,6 +84,9 @@ export default {
 
 <style scoped>
 .greetingsInput{
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+}
+#button-start{
+  margin-top: 24px;
 }
 </style>

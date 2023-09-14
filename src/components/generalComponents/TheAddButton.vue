@@ -11,6 +11,7 @@ export default {
 <style scoped>
 button{
   border: 1px solid #5558FA;
+  flex-shrink: 0;
   margin-top: 8px;
   border-radius: 4px;
   width: 44px;

@@ -1,6 +1,7 @@
 <!--suppress ALL -->
 <template>
 <the-content-wrapper class="stepTwoWrapper" :style="wrapperHeight">
+  <the-validation-errors ref="validationErrors" class="stepTwoValidationErrors"></the-validation-errors>
   <the-progress-bar :point-two="true"></the-progress-bar>
     <the-input-field :placeholder="placeholder" :apply-delete="true" :type="'input'" :input-width="inputWidth" :bg-color="bgColor" :apply-title="true" @input="necessaryInputDataUpdate">
       <template v-slot:title>Advantages</template>
@@ -14,9 +15,12 @@
   <the-check-box-group :apply-title="true" @input="updateCheckboxesValues" @update:checkBoxOne="updateCheckBoxOne" @update:checkBoxTwo="updateCheckBoxTwo" @update:checkBoxThree="updateCheckBoxThree">
     <template v-slot:title>Checkbox group</template>
   </the-check-box-group>
+  <the-radio-button-group :apply-title="true" @update="updateRadioButtonValue" v-model="radioButtonValue">
+    <template v-slot:title>Radiobuttons group</template>
+  </the-radio-button-group>
   <div class="stepTwoButtonsWrapper">
-    <the-back-button id="button-back"><template v-slot:text>Назад</template></the-back-button>
-    <the-next-button id="button-next"><template v-slot:text>Далее</template></the-next-button>
+    <the-back-button id="button-back" @click="goBack"><template v-slot:text>Назад</template></the-back-button>
+    <the-next-button id="button-next" @click="goToStepThree"><template v-slot:text>Далее</template></the-next-button>
   </div>
   </the-content-wrapper>
 </template>
@@ -29,6 +33,9 @@ import TheAddButton from '@/components/generalComponents/TheAddButton'
 import TheBackButton from '@/components/generalComponents/TheBackButton'
 import TheNextButton from '@/components/generalComponents/TheNextButton'
 import TheCheckBoxGroup from '@/components/generalComponents/TheCheckBoxGroup'
+import TheRadioButtonGroup from '@/components/generalComponents/TheRadioButtonGroup'
+import TheValidationErrors from '@/components/generalComponents/TheValidationErrors'
+import router from '@/main'
 export default {
   name: 'StepTwoPage',
   data () {
@@ -39,17 +46,20 @@ export default {
       necessaryInputData: '',
       addedInputs: [],
       addedInputsValues: [],
-      checkBoxOne: Boolean,
-      checkBoxTwo: Boolean,
-      checkBoxThree: Boolean
+      checkBoxOne: Boolean(),
+      checkBoxTwo: Boolean(),
+      checkBoxThree: Boolean(),
+      radioButtonValue: ''
     }
   },
   components: {
+    'the-validation-errors': TheValidationErrors,
     'the-content-wrapper': TheContentWrapper,
     'the-progress-bar': TheProgressBar,
     'the-input-field': TheInputField,
     'the-add-button': TheAddButton,
     'the-check-box-group': TheCheckBoxGroup,
+    'the-radio-button-group': TheRadioButtonGroup,
     'the-back-button': TheBackButton,
     'the-next-button': TheNextButton
   },
@@ -87,13 +97,57 @@ export default {
       } else {
         this.checkBoxThree = true
       }
+    },
+    updateRadioButtonValue () {
+      this.radioButtonValue = event.target.value
+    },
+    validateNecessaryAdvantage () {
+      return (this.necessaryInputData === '' || this.necessaryInputData.length === 0 || this.necessaryInputData === null)
+    },
+    validateAddedAdvantages () {
+      let errorFlag = false
+      if (this.addedInputsValues.length !== 0) {
+        for (let i = 0; i < this.addedInputsValues.length; i++) {
+          if (this.addedInputsValues[i] === '' || this.addedInputsValues[i] === null || this.addedInputsValues[i] === undefined) {
+            errorFlag = true
+          }
+        }
+      }
+      return errorFlag
+    },
+    validateRadiobuttons () {
+      return (this.radioButtonValue === '' || this.radioButtonValue.length === 0 || this.radioButtonValue === null)
+    },
+    goToStepThree () {
+      const greetingsErrors = this.$refs.validationErrors
+      greetingsErrors.errors = []
+      let errorFlag = false
+      if (this.validateNecessaryAdvantage()) {
+        greetingsErrors.errors.push('Заполните хотя бы одно поле Advantage')
+        errorFlag = true
+      }
+      if (this.validateRadiobuttons()) {
+        greetingsErrors.errors.push('Выберите одну из радиокнопок')
+        errorFlag = true
+      }
+      if (this.validateAddedAdvantages()) {
+        greetingsErrors.errors.push('Заполните добавленные Advantage-поля, либо удалите лишние')
+        errorFlag = true
+      }
+      if (greetingsErrors.errors.length === 0 && !errorFlag) {
+        event.preventDefault()
+        router.push('/greetings/step1/step2/step3')
+      }
+    },
+    goBack () {
+      router.push('/greetings/step1/step2')
     }
   },
   computed: {
     wrapperHeight () {
       const componentHeight = 44
       const componentCount = this.addedInputs.length
-      const minHeight = 800
+      const minHeight = 712
       const totalHeight = minHeight + (componentCount * componentHeight)
       return {
         height: `${totalHeight}px`
@@ -117,5 +171,8 @@ export default {
   justify-content: space-between;
   margin-top: 64px;
   margin-bottom: 80px;
+}
+.stepTwoValidationErrors{
+  margin-left: 810px
 }
 </style>

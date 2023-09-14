@@ -11,6 +11,9 @@
   <the-add-button @click="addComponent">
     <template v-slot:text>+</template>
   </the-add-button>
+  <the-check-box-group :apply-title="true" @input="updateCheckboxesValues" @update:checkBoxOne="updateCheckBoxOne" @update:checkBoxTwo="updateCheckBoxTwo" @update:checkBoxThree="updateCheckBoxThree">
+    <template v-slot:title>Checkbox group</template>
+  </the-check-box-group>
   <div class="stepTwoButtonsWrapper">
     <the-back-button id="button-back"><template v-slot:text>Назад</template></the-back-button>
     <the-next-button id="button-next"><template v-slot:text>Далее</template></the-next-button>
@@ -25,6 +28,7 @@ import TheInputField from '@/components/generalComponents/TheInputField'
 import TheAddButton from '@/components/generalComponents/TheAddButton'
 import TheBackButton from '@/components/generalComponents/TheBackButton'
 import TheNextButton from '@/components/generalComponents/TheNextButton'
+import TheCheckBoxGroup from '@/components/generalComponents/TheCheckBoxGroup'
 export default {
   name: 'StepTwoPage',
   data () {
@@ -34,7 +38,10 @@ export default {
       inputWidth: '300px',
       necessaryInputData: '',
       addedInputs: [],
-      addedInputsValues: []
+      addedInputsValues: [],
+      checkBoxOne: Boolean,
+      checkBoxTwo: Boolean,
+      checkBoxThree: Boolean
     }
   },
   components: {
@@ -42,6 +49,7 @@ export default {
     'the-progress-bar': TheProgressBar,
     'the-input-field': TheInputField,
     'the-add-button': TheAddButton,
+    'the-check-box-group': TheCheckBoxGroup,
     'the-back-button': TheBackButton,
     'the-next-button': TheNextButton
   },
@@ -58,6 +66,27 @@ export default {
     },
     necessaryInputDataUpdate () {
       this.necessaryInputData = event.target.value
+    },
+    updateCheckBoxOne () {
+      if (this.checkBoxOne === true) {
+        this.checkBoxOne = false
+      } else {
+        this.checkBoxOne = true
+      }
+    },
+    updateCheckBoxTwo () {
+      if (this.checkBoxTwo === true) {
+        this.checkBoxTwo = false
+      } else {
+        this.checkBoxTwo = true
+      }
+    },
+    updateCheckBoxThree () {
+      if (this.checkBoxThree === true) {
+        this.checkBoxThree = false
+      } else {
+        this.checkBoxThree = true
+      }
     }
   },
   computed: {

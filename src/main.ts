@@ -40,18 +40,18 @@ const greetingsModule = {
     emailData: String('')
   },
   mutations: {
-    SET_PHONE (state : any, payload : '') {
+    SET_PHONE (state : any, payload : string) {
       state.phoneData = payload
     },
-    SET_EMAIL (state: any, payload : '') {
+    SET_EMAIL (state: any, payload : string) {
       state.emailData = payload
     }
   },
   actions: {
-    SET_PHONE (context : any, payload: '') {
+    SET_PHONE (context : any, payload: string) {
       context.commit('SET_PHONE', payload)
     },
-    SET_EMAIL (context : any, payload: '') {
+    SET_EMAIL (context : any, payload: string) {
       context.commit('SET_EMAIL', payload)
     }
   },
@@ -73,30 +73,30 @@ const stepOneModule = {
     sexData: String('')
   },
   mutations: {
-    SET_NICKNAME (state : any, payload : '') {
+    SET_NICKNAME (state : any, payload : string) {
       state.nicknameData = payload
     },
-    SET_NAME (state : any, payload : '') {
+    SET_NAME (state : any, payload : string) {
       state.nameData = payload
     },
-    SET_SURNAME (state : any, payload : '') {
+    SET_SURNAME (state : any, payload : string) {
       state.surnameData = payload
     },
-    SET_SEX (state : any, payload : '') {
+    SET_SEX (state : any, payload : string) {
       state.sexData = payload
     }
   },
   actions: {
-    SET_NICKNAME (context: any, payload: '') {
+    SET_NICKNAME (context: any, payload: string) {
       context.commit('SET_NICKNAME', payload)
     },
-    SET_NAME (context: any, payload: '') {
+    SET_NAME (context: any, payload: string) {
       context.commit('SET_NAME', payload)
     },
-    SET_SURNAME (context: any, payload: '') {
+    SET_SURNAME (context: any, payload: string) {
       context.commit('SET_SURNAME', payload)
     },
-    SET_SEX (context: any, payload: '') {
+    SET_SEX (context: any, payload: string) {
       context.commit('SET_SEX', payload)
     }
   },
@@ -115,12 +115,63 @@ const stepOneModule = {
     }
   }
 }
+const stepTwoModule = {
+  state: {
+    necessaryAdvantageData: String(''),
+    addedAdvantagesData: Array,
+    checkBoxesData: Array,
+    radioButtonData: String('')
+  },
+  mutations: {
+    SET_NECESSARY_ADV_DATA (state : any, payload : string) {
+      state.necessaryAdvantageData = payload
+    },
+    SET_ADDED_ADV_DATA (state : any, payload : Array<string>) {
+      state.addedAdvantagesData = payload
+    },
+    SET_CHECK_BOXES_DATA (state : any, payload : Array<string>) {
+      state.checkBoxesData = payload
+    },
+    SET_RADIO_BUTTON_DATA (state : any, payload : string) {
+      state.radioButtonData = payload
+    }
+  },
+  actions: {
+    SET_NECESSARY_ADV_DATA (context : any, payload : string) {
+      context.commit('SET_NECESSARY_ADV_DATA', payload)
+    },
+    SET_ADDED_ADV_DATA (context : any, payload : Array<string>) {
+      context.commit('SET_ADDED_ADV_DATA', payload)
+    },
+    SET_CHECK_BOXES_DATA (context : any, payload : Array<string>) {
+      context.commit('SET_CHECK_BOXES_DATA', payload)
+    },
+    SET_RADIO_BUTTON_DATA (context: any, payload: string) {
+      context.commit('SET_RADIO_BUTTON_DATA', payload)
+    }
+  },
+  getters: {
+    NECESSARY_ADV: (state : any) => {
+      return state.necessaryAdvantageData
+    },
+    ADDED_ADV_DATA: (state : any) => {
+      return state.addedAdvantagesData
+    },
+    CHECK_BOXES_DATA: (state : any) => {
+      return state.checkBoxesData
+    },
+    RADIO_BUTTON_DATA: (state : any) => {
+      return state.radioButtonData
+    }
+  }
+}
 // Модули
 // Хранилище
 const store = createStore({
   modules: {
     greetingsModule,
-    stepOneModule
+    stepOneModule,
+    stepTwoModule
   }
 })
 // Хранилище

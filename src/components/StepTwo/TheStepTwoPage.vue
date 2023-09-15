@@ -70,6 +70,8 @@ export default {
     },
     deleteComponent (index) {
       document.getElementById(index).remove()
+      this.addedInputs.splice(index, 1)
+      this.addedInputsValues.splice(index, 1)
     },
     updateInputsValues (index) {
       this.addedInputsValues[index] = event.target.value

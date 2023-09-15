@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import TheGreetingsPage from '@/components/Greetings/TheGreetingsPage.vue'
 import TheStepOnePage from '@/components/StepOne/TheStepOnePage.vue'
 import TheStepTwoPage from '@/components/StepTwo/TheStepTwoPage.vue'
+import TheStepThreePage from '@/components/StepThree/TheStepThreePage.vue'
 import { createStore } from 'vuex'
 // Импорты
 // Роутер
@@ -27,6 +28,12 @@ const router = createRouter({
       path: '/greetings/step1/step2',
       components: {
         theStepTwoPage: TheStepTwoPage
+      }
+    },
+    {
+      path: '/greetings/step1/step2/step3',
+      components: {
+        theStepThreePage: TheStepThreePage
       }
     }
   ]
@@ -179,6 +186,7 @@ const app = createApp(App)
 app.component('the-greetings-page', TheGreetingsPage)
 app.component('the-step-one-page', TheStepOnePage)
 app.component('the-step-two-page', TheStepTwoPage)
+app.component('the-step-three-page', TheStepThreePage)
 app.use(router)
 app.use(store)
 app.mount('#app')

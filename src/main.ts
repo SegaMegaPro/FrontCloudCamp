@@ -6,6 +6,7 @@ import TheGreetingsPage from '@/components/Greetings/TheGreetingsPage.vue'
 import TheStepOnePage from '@/components/StepOne/TheStepOnePage.vue'
 import TheStepTwoPage from '@/components/StepTwo/TheStepTwoPage.vue'
 import TheStepThreePage from '@/components/StepThree/TheStepThreePage.vue'
+import TheStorageTest from '@/components/StorageTest/TheStorageTest.vue'
 import { createStore } from 'vuex'
 // Импорты
 // Роутер
@@ -34,6 +35,12 @@ const router = createRouter({
       path: '/greetings/step1/step2/step3',
       components: {
         theStepThreePage: TheStepThreePage
+      }
+    },
+    {
+      path: '/dataFromStore',
+      components: {
+        theStorageTest: TheStorageTest
       }
     }
   ]
@@ -172,13 +179,34 @@ const stepTwoModule = {
     }
   }
 }
+const stepThreeModule = {
+  state: {
+    about: String('')
+  },
+  mutations: {
+    SET_ABOUT (state : any, payload : string) {
+      state.about = payload
+    }
+  },
+  actions: {
+    SET_ABOUT (context : any, payload : string) {
+      context.commit('SET_ABOUT', payload)
+    }
+  },
+  getters: {
+    ABOUT: (state : any) => {
+      return state.about
+    }
+  }
+}
 // Модули
 // Хранилище
 const store = createStore({
   modules: {
     greetingsModule,
     stepOneModule,
-    stepTwoModule
+    stepTwoModule,
+    stepThreeModule
   }
 })
 // Хранилище
@@ -187,6 +215,7 @@ app.component('the-greetings-page', TheGreetingsPage)
 app.component('the-step-one-page', TheStepOnePage)
 app.component('the-step-two-page', TheStepTwoPage)
 app.component('the-step-three-page', TheStepThreePage)
+app.component('the-storage-test', TheStorageTest)
 app.use(router)
 app.use(store)
 app.mount('#app')

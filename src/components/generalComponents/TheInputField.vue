@@ -4,7 +4,7 @@
     <input :placeholder="placeholder" v-model="inputValue" @input="emitValue" ref="maskedInput" :style="{backgroundColor: bgColor, width: inputWidth, height: inputHeight, padding: inputPadding}">
     <a href="#" v-if="applyTip" @mouseover="showTipContent = true" @mouseleave="showTipContent = false" @click="preventDefault">
       Tip
-      <div v-if="showTipContent" class="tooltip" :style="{margin: tipMargin}">{{tipContent}}</div>
+      <div v-if="showTipContent" class="tooltip">{{tipContent}}</div>
     </a>
     <button v-if="applyDelete" @click="deleteButton(componentId)">
       <svg width="30" height="30" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">

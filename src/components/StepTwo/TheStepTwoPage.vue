@@ -3,19 +3,42 @@
 <the-content-wrapper class="stepTwoWrapper" :style="wrapperHeight">
   <the-validation-errors ref="validationErrors" class="stepTwoValidationErrors"></the-validation-errors>
   <the-progress-bar :point-two="true"></the-progress-bar>
-    <the-input-field :placeholder="placeholder" :apply-delete="true" :type="'input'" :input-width="inputWidth" :bg-color="bgColor" :apply-title="true" @input="necessaryInputDataUpdate">
+    <the-input-field
+      :placeholder="placeholder"
+      :apply-delete="true"
+      :type="'input'"
+      :input-width="inputWidth"
+      :bg-color="bgColor"
+      :apply-title="true"
+      @input="necessaryInputDataUpdate">
       <template v-slot:title>Advantages</template>
     </the-input-field>
   <div class="stepTwoInputsWrapper" v-for="(component, index) in addedInputs" :key="index">
-    <the-input-field :component-id="index" @delete="deleteComponent" :placeholder="placeholder" :apply-delete="true" :type="'input'" :input-width="inputWidth" :bg-color="bgColor" @input="updateInputsValues(index)"></the-input-field>
+    <the-input-field
+      :component-id="index"
+      @delete="deleteComponent"
+      :placeholder="placeholder"
+      :apply-delete="true"
+      :input-width="inputWidth"
+      :bg-color="bgColor"
+      @input="updateInputsValues(index)">
+    </the-input-field>
   </div>
   <the-add-button @click="addComponent">
     <template v-slot:text>+</template>
   </the-add-button>
-  <the-check-box-group :apply-title="true" @input="updateCheckboxesValues" @update:checkBoxOne="updateCheckBoxOne" @update:checkBoxTwo="updateCheckBoxTwo" @update:checkBoxThree="updateCheckBoxThree">
+  <the-check-box-group
+    :apply-title="true"
+    @input="updateCheckboxesValues"
+    @update:checkBoxOne="updateCheckBoxOne"
+    @update:checkBoxTwo="updateCheckBoxTwo"
+    @update:checkBoxThree="updateCheckBoxThree">
     <template v-slot:title>Checkbox group</template>
   </the-check-box-group>
-  <the-radio-button-group :apply-title="true" @update="updateRadioButtonValue" v-model="radioButtonValue">
+  <the-radio-button-group
+    :apply-title="true"
+    @update="updateRadioButtonValue"
+    v-model="radioButtonValue">
     <template v-slot:title>Radiobuttons group</template>
   </the-radio-button-group>
   <div class="stepTwoButtonsWrapper">
@@ -36,6 +59,7 @@ import TheCheckBoxGroup from '@/components/generalComponents/TheCheckBoxGroup'
 import TheRadioButtonGroup from '@/components/generalComponents/TheRadioButtonGroup'
 import TheValidationErrors from '@/components/generalComponents/TheValidationErrors'
 import router from '@/main'
+import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'StepTwoPage',
   data () {
@@ -43,13 +67,13 @@ export default {
       placeholder: 'Placeholder',
       bgColor: '#FFFFFF',
       inputWidth: '300px',
-      necessaryInputData: '',
+      necessaryInputData: this.$store.getters.NECESSARY_ADV,
       addedInputs: [],
       addedInputsValues: [],
       checkBoxOne: Boolean(),
       checkBoxTwo: Boolean(),
       checkBoxThree: Boolean(),
-      radioButtonValue: ''
+      radioButtonValue: this.$store.getters.RADIO_BUTTON_DATA
     }
   },
   components: {
@@ -64,6 +88,7 @@ export default {
     'the-next-button': TheNextButton
   },
   methods: {
+    ...mapMutations(['SET_NECESSARY_ADV_DATA', 'SET_ADDED_ADV_DATA', 'SET_CHECK_BOXES_DATA', 'SET_RADIO_BUTTON_DATA']),
     addComponent () {
       this.addedInputs.push({})
       this.addedInputsValues.push('')
@@ -138,6 +163,10 @@ export default {
       }
       if (greetingsErrors.errors.length === 0 && !errorFlag) {
         event.preventDefault()
+        this.$store.dispatch('SET_NECESSARY_ADV_DATA', this.necessaryInputData)
+        this.$store.dispatch('SET_ADDED_ADV_DATA', this.addedInputsValues)
+        this.$store.dispatch('SET_CHECK_BOXES_DATA', [this.checkBoxOne, this.checkBoxTwo, this.checkBoxThree])
+        this.$store.dispatch('SET_RADIO_BUTTON_DATA', this.radioButtonValue)
         router.push('/greetings/step1/step2/step3')
       }
     },
@@ -154,7 +183,8 @@ export default {
       return {
         height: `${totalHeight}px`
       }
-    }
+    },
+    ...mapState(['necessaryAdvantageData', 'addedAdvantagesData', 'checkBoxesData', 'radioButtonData'])
   }
 }
 </script>

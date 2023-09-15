@@ -3,6 +3,7 @@
   <router-view name="theStepOnePage"></router-view>
   <router-view name="theStepTwoPage"></router-view>
   <router-view name="theStepThreePage"></router-view>
+  <router-view name="theStorageTest"></router-view>
 </template>
 
 <script lang="ts">

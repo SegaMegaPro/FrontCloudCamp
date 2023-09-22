@@ -59,7 +59,7 @@ export default {
         event.preventDefault()
         this.$store.dispatch('SET_PHONE', this.phone)
         this.$store.dispatch('SET_EMAIL', this.email)
-        router.push('/greetings/step1')
+        router.push('/step1')
       }
     },
     validatePhone () {

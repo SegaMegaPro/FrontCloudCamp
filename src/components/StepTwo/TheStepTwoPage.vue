@@ -167,11 +167,11 @@ export default {
         this.$store.dispatch('SET_ADDED_ADV_DATA', this.addedInputsValues)
         this.$store.dispatch('SET_CHECK_BOXES_DATA', [this.checkBoxOne, this.checkBoxTwo, this.checkBoxThree])
         this.$store.dispatch('SET_RADIO_BUTTON_DATA', this.radioButtonValue)
-        router.push('/greetings/step1/step2/step3')
+        router.push('/step1/step2/step3')
       }
     },
     goBack () {
-      router.push('/greetings/step1/step2')
+      router.push('/step1/step2')
     }
   },
   computed: {

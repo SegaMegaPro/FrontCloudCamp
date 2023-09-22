@@ -111,7 +111,7 @@ export default {
         this.$store.dispatch('SET_NAME', this.name)
         this.$store.dispatch('SET_SURNAME', this.surname)
         this.$store.dispatch('SET_SEX', this.sex)
-        router.push('/greetings/step1/step2')
+        router.push('/step1/step2')
       }
     },
     updateNickname () {

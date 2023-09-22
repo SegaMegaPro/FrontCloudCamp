@@ -14,25 +14,25 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/greetings',
+      path: '/',
       components: {
         theGreetingsPage: TheGreetingsPage
       }
     },
     {
-      path: '/greetings/step1',
+      path: '/step1',
       components: {
         theStepOnePage: TheStepOnePage
       }
     },
     {
-      path: '/greetings/step1/step2',
+      path: '/step1/step2',
       components: {
         theStepTwoPage: TheStepTwoPage
       }
     },
     {
-      path: '/greetings/step1/step2/step3',
+      path: '/step1/step2/step3',
       components: {
         theStepThreePage: TheStepThreePage
       }

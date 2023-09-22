@@ -67,7 +67,7 @@ export default {
       }
     },
     goBack () {
-      router.push('/greetings/step1/step2')
+      router.push('/step1/step2')
     }
   }
 }

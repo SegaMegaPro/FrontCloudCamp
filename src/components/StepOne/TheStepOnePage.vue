@@ -139,9 +139,7 @@ export default {
       return !surnameREGEXP.test(this.surname)
     },
     validateSex () {
-      if (this.sex) {
-        return (this.sex === '' || this.sex.length === 0 || this.sex === null)
-      }
+      return (this.sex === '' || this.sex.length === 0 || this.sex === null)
     },
     goBack () {
       router.push('/')

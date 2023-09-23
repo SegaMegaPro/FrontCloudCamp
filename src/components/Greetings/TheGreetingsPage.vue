@@ -66,7 +66,7 @@ export default {
       return (this.phone.length < 16)
     },
     validateEmail () {
-      const emailRegEXP = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+      const emailRegEXP = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
       return !emailRegEXP.test(this.email)
     },
     updatePhone () {

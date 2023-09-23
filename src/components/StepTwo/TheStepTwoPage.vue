@@ -171,7 +171,7 @@ export default {
       }
     },
     goBack () {
-      router.push('/step1/step2')
+      router.push('/step1')
     }
   },
   computed: {

@@ -144,7 +144,7 @@ export default {
       }
     },
     goBack () {
-      router.push('/greetings')
+      router.push('/')
     }
   },
   computed: {
